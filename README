@@ -15,6 +15,13 @@ Installation:
 
 6. Your server should be running at port 8800
 
+7. to ensure high-availability and continuous monitoring of server, 
+we will need to install pm2 manually out of the project
+then run pm2 against the compiled js
+
+	npm install -g pm2 
+	pm2 start C:\Users\{username}\Downloads\js_mail-main\dist\index.js 
+
 
 =================================
 Sending mail
@@ -51,12 +58,13 @@ Test scripts are written in typescript and resides in ./src/__test__
 Using supertest to call upon endpoints, jest for test assertions  
 1. Includes 3 test suites
 2. To run them, type the following into CMD 
-	cd C:\Users\{username}\Downloads 
+	cd C:\Users\{username}\Downloads\js_mail-main 
 	npm run test 
 
 
 =================================
 Shortcomings/ compromise: 
 1. Email is using less secure username + password pair instead of modern authentication, eg: oAuth2 token
+
 2. preference towards traditional request body/ querystring for payload instead of url slugs eg: /mail/:mailTo, 
 for better integration with legacy systems.
