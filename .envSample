@@ -1,0 +1,3 @@
+ENV="DEV"
+MAILFROM="hello@gmail.com"
+MAILPASS="hellopassword"

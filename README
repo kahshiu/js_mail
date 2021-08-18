@@ -1,0 +1,62 @@
+=================================
+Installation:
+1. install node js onto your platform, eg Windows
+2. download project, unzip.
+3. Configure your email. Launch the following file in your favourite editor, eg Visual Studio Code
+	C:\Users\{username}\Downloads\js_mail\.env
+4. Append your email and password into .env file. An example file given -- .envSample. 
+5. Kickstart your project. Launch your CMD on windows, and type the following commands 
+	cd C:\Users\{username}\Downloads 
+	npm i
+	npm run start
+
+	NOTE: for further development, use 
+	npm run dev
+
+6. Your server should be running at port 8800
+
+
+=================================
+Sending mail
+1. use postman to get the following request 
+request-url: http://localhost:8800/mail
+request-body: {"mailTo": "happyman@gmail.com", "mailText":"this is my custom email content", "apiToken": "helloPassword"}
+
+
+=================================
+General Architecture
+All source code reside in ./src.
+Written in typescript (ES6), uses ts-node-dev to watch changes in ./src directory. 
+Changes done on files within directory will trigger js recompilation.
+Upon successful rebuild, will place compiled javascript into ./dist
+
+[NOTE: for manual rebuilding, use:: npm run build]
+
+Backend is built using express, nodemailer for email sending. 
+Backend exposes 2 endpoints as below: 
+1. GET /
+response: "service is running" 
+
+2. POST /mail 
+content-type: application/json
+request-body: {"mailTo": "happyman@gmail.com", "mailText":"this is my custom email content", "apiToken": "helloPassword"}
+response-body: {message: Invalid parameters/ email error/ email sent, date: server timestamp}
+-- Note that this endpoint must include apiToken, else will fail authentication
+
+
+
+=================================
+Testing 
+Test scripts are written in typescript and resides in ./src/__test__
+Using supertest to call upon endpoints, jest for test assertions  
+1. Includes 3 test suites
+2. To run them, type the following into CMD 
+	cd C:\Users\{username}\Downloads 
+	npm run test 
+
+
+=================================
+Shortcomings/ compromise: 
+1. Email is using less secure username + password pair instead of modern authentication, eg: oAuth2 token
+2. preference towards traditional request body/ querystring for payload instead of url slugs eg: /mail/:mailTo, 
+for better integration with legacy systems.
