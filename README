@@ -3,10 +3,10 @@ Installation:
 1. install node js onto your platform, eg Windows
 2. download project, unzip.
 3. Configure your email. Launch the following file in your favourite editor, eg Visual Studio Code
-	C:\Users\{username}\Downloads\js_mail\.env
+	C:\Users\{username}\Downloads\js_mail-main\.env
 4. Append your email and password into .env file. An example file given -- .envSample. 
 5. Kickstart your project. Launch your CMD on windows, and type the following commands 
-	cd C:\Users\{username}\Downloads 
+	cd C:\Users\{username}\Downloads\js_mail-main 
 	npm i
 	npm run start
 

@@ -1,6 +1,7 @@
 import express, { Request, Response, Application, NextFunction, request } from 'express';
 import { createTransport } from 'nodemailer';
-// import env from 'dotenv';
+import env from 'dotenv';
+env.config()
 // console.log("tracing env: ", process.env.ENV);
 
 const PORT = process.env.PORT || 8800;
@@ -56,8 +57,10 @@ app.post("/mail", (req: Request, res: Response): void => {
   }
 
   // NOTE: premature exit
-  if (!!mailTo) {
+  // console.log("tracing mailTo: ", mailTo)
+  if (mailTo === undefined) {
     res.send(JSON.stringify(result));
+    return;
   }
 
   // NOTE: actual sending
@@ -73,20 +76,25 @@ app.post("/mail", (req: Request, res: Response): void => {
     { service: "gmail", auth: { user: mailFrom, pass: mailPass } };
   const transporter = createTransport(transportConfig);
 
+  console.log("tracing transporter: ", transportConfig)
+
   transporter.sendMail({
     from: mailFrom,
-    to: "kahshiu@gmail.com",
+    to: mailTo,
     subject: "Hello",
     text: mailText ?? "Hello from me",
 
   }, function (error, mailResult) {
     if (error) {
+      console.log("tracing error: ", error)
       result.message = "email error"
-      res.send(result);
+    } else {
+      result.message = "email sent"
     }
-    result.message = "email sent"
     res.send(result);
+    return;
   })
+
 });
 
 app.listen(PORT, (): void => {
